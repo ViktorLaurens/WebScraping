@@ -3,6 +3,7 @@ from scrape import (scrape_website,
                     extract_body_content, 
                     clean_body_content, 
                     split_dom_content)
+from parse import parse_with_ollama
 
 st.title('AI Web Scraper')
 url = st.text_input('Enter a website URL: ')
@@ -23,5 +24,7 @@ if "dom_content" in st.session_state:
         if parse_description: 
             st.write('Parsing...')
             dom_chunks = split_dom_content(st.session_state.dom_content)
+            result = parse_with_ollama(dom_chunks, parse_description)
+            st.write(result)
             st.write('Parsing complete!')
             
